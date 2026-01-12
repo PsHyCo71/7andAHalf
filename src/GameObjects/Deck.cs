@@ -18,7 +18,7 @@ public class Deck
         this.addCards(6, new Cards(Cards.CardsType.CardRe));
         this.addCards(2, new Cards(0.0)); // matta
 
-        deck.Shuffle();
+        deck = deck.Shuffle().ToList();
     }
 
     private void addCards(int n_cards, Cards card)
@@ -42,7 +42,7 @@ public class Deck
 
             if (card.type == Cards.CardsType.CardMatta)
             {
-                deck.Shuffle();
+                deck = deck.Shuffle().ToList();
             }
 
             return card;
