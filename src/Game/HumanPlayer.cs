@@ -9,9 +9,10 @@ public class HumanPlayer : Player
         if (azione)
         {
             Cards? card = deck.drawCard() ?? throw new Exception("Non ci sono carte rimaste.");
+
             if (card.type == Cards.CardsType.CardMatta)
             {
-                System.Console.WriteLine("Hai pescato una matta! Se hai altre carte, il suo valore sarà calcolato secondo le regole del gioco.");
+                System.Console.WriteLine("Hai pescato una matta! Se hai altre carte, il suo valore sarà tale da garantire che il totale sia 7.5.");
                 if (TotalValue() == 0)
                 {
                     card.value = 0.5;

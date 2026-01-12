@@ -1,20 +1,37 @@
 ﻿using System;
 
-// to fix
-
 namespace SevenAndHalfGame;
 
 public class Program
 {
 
-    public Rules? rules {get; set; }
-    public static void Main()
+    public Rules? rules { get; set; }
+    public static void Main(string[] args)
     {
         Input input = new Input();
 
-        Rules.ShowRules();
+        Console.WriteLine($"Leggere le regole prima di iniziare? Si[s] No[n]");
+        while (true)
+        {
+            char rul = char.Parse(Console.ReadLine()?.Trim().ToLower() ?? "");
+            if (rul == 's')
+            {
+                Rules.ShowRules();
+                break;
+            }
+            else if (rul == 'n')
+            {
+                break;
+            }
+            else
+            {
+                Console.WriteLine("Input non valido. Inserisci 's' o 'n'.");
+                continue;
+            }
+        }
 
-        bool iniziare_partita = input.run("Iniziare partita? Si[s] No[n] Leggi le regole[r]", 's', 'n');
+
+        bool iniziare_partita = input.run("Iniziare partita? Si[s] No[n]", 's', 'n');
 
         if (iniziare_partita)
         {
@@ -28,125 +45,62 @@ public class Program
 
             while (to_play)
             {
-                HumanPlayer game = new HumanPlayer();
-                Console.WriteLine("Iniziata una nuova patita.");
-            }
-        }
-        else if ()
-        {
-            Console.WriteLine("Uscita dal programma...");
-        }
+                // 1️⃣ Creazione mazzo e shuffle
+                Deck deck = new Deck();
 
-        // while (true)
-        // {
-        //     string input = Console.ReadLine()?.Trim().ToLower() ?? "";
+                // 2️⃣ Creazione giocatori
+                HumanPlayer human = new HumanPlayer();
+                ComputerPlayer pc = new ComputerPlayer();
 
-        //     if (input == "s")
-        //     {
-        //         var game = new Game();
+                Console.WriteLine("Iniziata una nuova partita.");
 
-        //         while (true)
-        //         {
-        //             Cards firstCard = game.PickCard();
-        //             Console.WriteLine($"Prima carta: {firstCard.GetSymbol()}, valore: {firstCard.GetValue()}");
-
-        //             if (firstCard.GetValue() == 3 || firstCard.GetValue() == 4)
-        //             {
-        //                 Console.WriteLine("Opzione Brucia disponibile!");
-        //                 Console.WriteLine("Vuoi bruciare la carta? Si[s] No[n]");
-        //                 string burnInput = Console.ReadLine()?.Trim().ToLower() ?? "";
-        //                 if (burnInput == "s")
-        //                 {
-        //                     continue;
-        //                 }
-        //                 else if (burnInput == "n")
-        //                 {
-        //                     break;
-        //                 }
-        //                 else
-        //                 {
-        //                     Console.WriteLine("Input non valido. Inserisci 's' o 'n'.");
-        //                 }
-        //             }
-        //             else
-        //             {
-        //                 break;
-        //             }
-        //         }
-
-        //         while (true)
-        //         {
-        //             char result = ContinueGame(game);
-
-        //             if (result == 'n')
-        //             {
-        //                 Console.WriteLine("Uscita dal programma...");
-        //                 return;
-        //             }
-        //             else if (result == 's')
-        //             {
-        //                 break;
-        //             }
-        //         }
-        //     }
-        //     else if (input == "n")
-        //     {
-        //         Console.WriteLine("Uscita dal programma...");
-        //         break;
-        //     }
-        //     else
-        //     {
-        //         Console.WriteLine("Input non valido. Inserisci 's' per iniziare o 'n' per uscire.");
-        //     }
-        // }
-    }
-
-    public static char ContinueGame(Player game)
-    {
-        Console.WriteLine("Scegli: Carta[c] Stare[s]");
-
-        while (true)
-        {
-            string input = Console.ReadLine()?.Trim().ToLower() ?? "";
-
-            if (input == "c")
-            {
-                Cards newCard = game.PickCard();
-                double total = game.TotalValue;
-                Console.WriteLine($"Carta pescata: {newCard.GetSymbol()}, valore: {newCard.GetValue()}, totale: {total}");
-
-                if (total > 7.5)
+                // 3️⃣ Turno HumanPlayer
+                while (true)
                 {
-                    Console.WriteLine("Hai sballato!");
-
-                    while (true)
+                    Cards? card = human.DrawCard(deck);
+                    if (card == null || human.TotalValue() > 7.5)
                     {
-                        Console.WriteLine("Vuoi iniziare una nuova partita? Si[s] No[n]");
-                        string choice = Console.ReadLine()?.Trim().ToLower() ?? "";
-
-                        if (choice == "s")
-                            return 's';
-                        else if (choice == "n")
-                            return 'n';
-                        else
-                            Console.WriteLine("Input non valido. Inserisci 's' o 'n'.");
+                        break; // L'utente ha deciso di stare o ha sballato
                     }
+                }
+
+                // 4️⃣ Turno ComputerPlayer (automatico)
+                pc.DrawCard(deck);
+
+                // 5️⃣ Confronto dei punteggi e vincitore
+                if (human.TotalValue() > 7.5)
+                {
+                    Console.WriteLine("Hai sballato! Vince il PC (mazziere).");
+                }
+                else if (pc.TotalValue() > 7.5)
+                {
+                    Console.WriteLine("Il PC ha sballato! Hai vinto!");
+                }
+                else if (pc.TotalValue() == 7.5 && human.TotalValue() == 7.5)
+                {
+                    Console.WriteLine("Entrambi hanno 7.5, ma il mazziere vince! Ha vinto il PC!");
+                }
+                else if (human.TotalValue() == pc.TotalValue())
+                {
+                    Console.WriteLine($"Pareggio! Entrambi hanno {human.TotalValue()} punti.");
+                }
+                else if (human.TotalValue() > pc.TotalValue())
+                {
+                    Console.WriteLine("Hai vinto!");
                 }
                 else
                 {
-                    Console.WriteLine("Vuoi continuare? Carta[c] Stare[s]");
-                    continue;
+                    Console.WriteLine("Ha vinto il PC!");
                 }
+
+                // 6️⃣ Chiedere se vuole fare un'altra partita
+                to_play = input.run("Vuoi inizare un'altra partita? Si[s] No[n]", 's', 'n');
+                first_game = false;
             }
-            else if (input == "s")
-            {
-                Console.WriteLine($"Hai scelto di stare con un valore totale di {game.TotalValue}");
-                return 's';
-            }
-            else
-            {
-                Console.WriteLine("Input non valido. Inserisci 'c' per carta o 's' per stare.");
-            }
+        }
+        else
+        {
+            Console.WriteLine("Uscita dal programma...");
         }
     }
 }
