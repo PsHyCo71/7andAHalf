@@ -11,13 +11,20 @@ public class HumanPlayer : Player
             Cards? card = deck.drawCard() ?? throw new Exception("Non ci sono carte rimaste.");
             if (card.type == Cards.CardsType.CardMatta)
             {
-                System.Console.WriteLine("Hai pescato una matta; inserisci un valore per la matta:");
-                double valore = //input qui
-                card = new Cards(valore);
+                System.Console.WriteLine("Hai pescato una matta! Se hai altre carte, il suo valore sarà calcolato secondo le regole del gioco.");
+                if (TotalValue() == 0)
+                {
+                    card.value = 0.5;
+                }
+                else
+                {
+                    card.value = 7.5 - TotalValue();
+                }
             }
-
+            CardsInHand.Add(card);
             return card;
-        } else
+        }
+        else
         {
             return null;
         }
@@ -32,7 +39,8 @@ public class HumanPlayer : Player
             if (card == null)
             {
                 break;
-            } else
+            }
+            else
             {
                 base.AddCard(card);
 

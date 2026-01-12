@@ -1,69 +1,27 @@
-using System.Linq;
+using System;
 
 public class Input
 {
-    public bool run(
-        string query,
-        char ok,
-        char no
-    )
+    
+    public bool run(string query, char ok, char no)
     {
-        bool has_retried = false;
-
         while (true)
         {
-            System.Console.WriteLine(query);
-            
-            if (has_retried)
+            Console.WriteLine(query);
+            string? line = Console.ReadLine()?.Trim().ToLower();
+            if (string.IsNullOrEmpty(line))
             {
-                System.Console.WriteLine($"Digita {ok} per si, o {no} per no.");
+                Console.WriteLine("Input non valido, riprova.");
+                continue;
             }
 
-            char? input = Console.ReadLine()?.Trim().ToLower()[0] ;
-            
-            if (input == null || input != ok || input != no)
-            {
-                has_retried = true;
-                continue;
-            } else if (input == ok)
-            {
+            char choice = line[0];
+            if (choice == ok)
                 return true;
-            } else
-            {
+            else if (choice == no)
                 return false;
-            }
-        }
-    }
-
-    public double run_numerico(string query, double[] excluded)
-    {
-        bool has_retried = false;
-
-        while (true)
-        {
-            System.Console.WriteLine(query);
-            
-            if (has_retried)
-            {
-                System.Console.WriteLine($"Inserisci un numero valido:");
-            }
-
-
-            string? input = Console.ReadLine()?.Trim().ToLower();
-            
-            if (input == null )
-            {
-                has_retried = true;
-                continue;
-            } else
-            {
-                double? input_parsed = double.Parse(input);
-
-                if (excluded.Contains(input_parsed))
-                {
-                    
-                }
-            }
+            else
+                Console.WriteLine($"Inserisci '{ok}' per sì o '{no}' per no.");
         }
     }
 }

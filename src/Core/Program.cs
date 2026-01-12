@@ -1,15 +1,20 @@
 ﻿using System;
 
+// to fix
+
 namespace SevenAndHalfGame;
 
 public class Program
 {
-    
+
+    public Rules? rules {get; set; }
     public static void Main()
     {
         Input input = new Input();
 
-        bool iniziare_partita = input.run("Iniziare partita? Si[s] No[n]", 's', 'n');
+        Rules.ShowRules();
+
+        bool iniziare_partita = input.run("Iniziare partita? Si[s] No[n] Leggi le regole[r]", 's', 'n');
 
         if (iniziare_partita)
         {
@@ -20,15 +25,14 @@ public class Program
             {
                 to_play = input.run("Vuoi inizare un'altra partita? Si[s] No[n]", 's', 'n');
             }
-            
+
             while (to_play)
             {
-                Game game = new Game();
-                System.Console.WriteLine("Iniziata una nuova patita.");
-
-                
+                HumanPlayer game = new HumanPlayer();
+                Console.WriteLine("Iniziata una nuova patita.");
             }
-        } else
+        }
+        else if ()
         {
             Console.WriteLine("Uscita dal programma...");
         }
@@ -97,7 +101,7 @@ public class Program
         // }
     }
 
-    public static char ContinueGame(Game game)
+    public static char ContinueGame(Player game)
     {
         Console.WriteLine("Scegli: Carta[c] Stare[s]");
 

@@ -59,8 +59,10 @@ public class Cards
                 return 'C';
             case CardsType.CardRe:
                 return 'R';
+            case CardsType.CardMatta:
+                return 'M';
             default:
-                throw new System.Exception("Invalid card type");
+                throw new System.Exception("Carta non valida");
         }
     }
 
@@ -85,9 +87,10 @@ public class Cards
             case CardsType.CardFante:
             case CardsType.CardCavallo:
             case CardsType.CardRe:
+            case CardsType.CardMatta:
                 return 0.5;
             default:
-                throw new System.Exception("Invalid card type");
+                throw new System.Exception("Carta non valida");
         }
     }
 
