@@ -1,9 +1,10 @@
 public class Deck
 {
     Random random = new Random();
-    List<Cards> deck = new List<Cards>();
+    List<Cards> deck = new List<Cards>(); // create deck
 
-    public Deck()
+    // set how many cards are in the deck
+    public Deck() 
     {
 
         this.addCards(8, new Cards(Cards.CardsType.Card1));
@@ -18,7 +19,7 @@ public class Deck
         this.addCards(6, new Cards(Cards.CardsType.CardRe));
         this.addCards(2, new Cards(0.0)); // matta
 
-        deck = deck.Shuffle().ToList();
+        deck = deck.Shuffle().ToList(); // shuffle deck
     }
 
     private void addCards(int n_cards, Cards card)
@@ -29,6 +30,7 @@ public class Deck
         }
     }
 
+    // func for drawing cards
     public Cards? drawCard()
     {
         if (deck.Count() == 0)
@@ -40,6 +42,7 @@ public class Deck
             Cards card = deck[0];
             deck.RemoveAt(0);
 
+            // shuffle if CardMatta is drawed
             if (card.type == Cards.CardsType.CardMatta)
             {
                 deck = deck.Shuffle().ToList();

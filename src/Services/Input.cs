@@ -2,7 +2,7 @@ using System;
 
 public class Input
 {
-    
+    // func to manage inputs
     public bool run(string query, char ok, char no)
     {
         while (true)

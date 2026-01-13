@@ -4,6 +4,8 @@ using SevenAndHalfGame;
 public class Rules
 {
     Program rules = new Program();
+    
+    // func for printing rules
     public static void ShowRules()
     {
         Console.WriteLine("Regole del gioco 7 e mezzo:");

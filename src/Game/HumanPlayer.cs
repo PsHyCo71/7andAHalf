@@ -4,12 +4,13 @@ public class HumanPlayer : Player
 
     public override Cards? DrawCard(Deck deck)
     {
-        bool azione = input.run($"Valore corrente: {base.TotalValue()} \n Scegli: Carta[c] Stare[s]", 'c', 's');
+        bool azione = input.run($"Valore corrente: {base.TotalValue()} \n Scegli: Carta[c] Stare[s]", 'c', 's'); // ask if the user wants to draw a card or stay
 
         if (azione)
         {
-            Cards? card = deck.drawCard() ?? throw new Exception("Non ci sono carte rimaste.");
+            Cards? card = deck.drawCard() ?? throw new Exception("Non ci sono carte rimaste."); // draw card and throw exeption in case there are no cards left
 
+            // if the drawed card is CardMatta set its value following the rules
             if (card.type == Cards.CardsType.CardMatta)
             {
                 System.Console.WriteLine("Hai pescato una matta! Se hai altre carte, il suo valore sarà tale da garantire che il totale sia 7.5.");
@@ -22,7 +23,7 @@ public class HumanPlayer : Player
                     card.value = 7.5 - TotalValue();
                 }
             }
-            CardsInHand.Add(card);
+            CardsInHand.Add(card);  // add the drawed card to the drawed cards list
             return card;
         }
         else
@@ -31,6 +32,7 @@ public class HumanPlayer : Player
         }
     }
 
+    // manage the player's turn
     public double Turn(Deck deck)
     {
         while (true)

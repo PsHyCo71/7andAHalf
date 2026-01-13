@@ -2,9 +2,10 @@ namespace SevenAndHalfGame;
 
 public class ComputerPlayer : Player
 {
-    private Random rnd = new Random();
+    private Random rnd = new Random(); // recall random class
     public override Cards? DrawCard(Deck deck)
     {
+        // set the probability for which the PC will ask for a card
         while (TotalValue() < 7.5)
         {
             double prob;
@@ -15,14 +16,15 @@ public class ComputerPlayer : Player
             else if (TotalValue() <= 7) prob = 0.05;
             else prob = 0.0;
 
-            if (rnd.NextDouble() > prob)
+            if (rnd.NextDouble() > prob) // if the drawn number is greater than the probability of drawing a card, the PC will stand.
                 {
                     Console.WriteLine($"Il PC ha deciso di stare!");
                     break;
                 }
 
-            Cards? card = deck.drawCard() ?? throw new Exception("Non ci sono carte rimaste.");
+            Cards? card = deck.drawCard() ?? throw new Exception("Non ci sono carte rimaste."); // draw card and throw exeption in case there are no cards left
 
+            // if the drawed card is CardMatta set its value following the rules
             if (card.type == Cards.CardsType.CardMatta)
             {
                 if (TotalValue() == 0)
@@ -35,10 +37,10 @@ public class ComputerPlayer : Player
                 }
             }
 
-            CardsInHand.Add(card);
-            Console.WriteLine($"PC ha pescato {card.GetSymbol()}, con valore {card.GetValue()}, totale ora {TotalValue()}");
+            CardsInHand.Add(card);  // add the drawed card to the drawed cards list
+            Console.WriteLine($"PC ha pescato {card.GetSymbol()}, con valore {card.GetValue()}, totale ora {TotalValue()}"); // print the drawed card, its value and the total points
 
-            if (TotalValue() > 7.5)
+            if (TotalValue() > 7.5)  // case where the PC busts
             {
                 Console.WriteLine($"Il PC ha sballato!");
                 break;

@@ -5,10 +5,13 @@ namespace SevenAndHalfGame;
 public class Program
 {
 
+    // get rules 
     public Rules? rules { get; set; }
     public static void Main(string[] args)
     {
         Input input = new Input();
+
+        // ask the user if he wants to read the rules
 
         Console.WriteLine($"Leggere le regole prima di iniziare? Si[s] No[n]");
         while (true)
@@ -16,12 +19,12 @@ public class Program
             char rul = char.Parse(Console.ReadLine()?.Trim().ToLower() ?? "");
             if (rul == 's')
             {
-                Rules.ShowRules();
+                Rules.ShowRules();   // recall .ShowRules()
                 break;
             }
             else if (rul == 'n')
             {
-                break;
+                break;  // don't show rules
             }
             else
             {
@@ -30,58 +33,60 @@ public class Program
             }
         }
 
-
+        // use the function .run to start the game
         bool iniziare_partita = input.run("Iniziare partita? Si[s] No[n]", 's', 'n');
 
         if (iniziare_partita)
         {
-            bool first_game = true;
+            bool first_game = true;     // set this to true bc is the first game
             bool to_play = true;
 
+            // if the user choses 'n' ask again
             if (!first_game)
             {
                 to_play = input.run("Vuoi inizare un'altra partita? Si[s] No[n]", 's', 'n');
             }
 
+            // start game
             while (to_play)
             {
-                // 1️⃣ Creazione mazzo e shuffle
+                // create deck and shuffle
                 Deck deck = new Deck();
 
-                // 2️⃣ Creazione giocatori
+                // create players
                 HumanPlayer human = new HumanPlayer();
                 ComputerPlayer pc = new ComputerPlayer();
 
                 Console.WriteLine("Iniziata una nuova partita.");
 
-                // 3️⃣ Turno HumanPlayer
+                // start user's turn
                 while (true)
                 {
                     Cards? card = human.DrawCard(deck);
                     if (card == null || human.TotalValue() > 7.5)
                     {
-                        break; // L'utente ha deciso di stare o ha sballato
+                        break; // the user decided to stay or he busted
                     }
                 }
-                if (human.TotalValue() > 7.5)
+                if (human.TotalValue() > 7.5) // if the user busted
                 {
                     Console.WriteLine("Hai sballato! Vince il PC (mazziere).");
-                    to_play = input.run("Vuoi inizare un'altra partita? Si[s] No[n]", 's', 'n');
+                    to_play = input.run("Vuoi inizare un'altra partita? Si[s] No[n]", 's', 'n'); // ask if he wants to play again
                     first_game = false;
                     if (to_play == false)
                     {
                         Console.WriteLine("Uscita dal programma...");
-                        break;
+                        break; // if 'n' then close the program
                     }
                 continue;
                 }
                 else
                 {
-                    // 4️⃣ Turno ComputerPlayer (automatico)
+                    // Computer's turn
                     pc.DrawCard(deck);
                 }
 
-                // 5️⃣ Confronto dei punteggi e vincitore
+                // compare the player's points and proclaim winner
                 if (pc.TotalValue() > 7.5)
                 {
                     Console.WriteLine("Il PC ha sballato! Hai vinto!");
@@ -103,7 +108,7 @@ public class Program
                     Console.WriteLine("Ha vinto il PC!");
                 }
 
-                // 6️⃣ Chiedere se vuole fare un'altra partita
+                // ask if he wants to play again
                 to_play = input.run("Vuoi inizare un'altra partita? Si[s] No[n]", 's', 'n');
                 first_game = false;
                 if (to_play == false)

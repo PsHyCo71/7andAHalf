@@ -1,6 +1,7 @@
 public class Cards
 {
-    public enum CardsType
+    // create all the cards
+    public enum CardsType 
     {
         Card1,
         Card2,
@@ -34,7 +35,7 @@ public class Cards
         this.value = value;
     }
 
-
+    // set the cards symbols
     public char GetSymbol()
     {
         switch (type)
@@ -66,6 +67,7 @@ public class Cards
         }
     }
 
+    // set cards values
     private double _GetValue()
     {
         switch (type)
