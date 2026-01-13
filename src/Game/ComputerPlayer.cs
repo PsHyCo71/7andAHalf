@@ -38,7 +38,7 @@ public class ComputerPlayer : Player
             CardsInHand.Add(card);
             Console.WriteLine($"PC ha pescato {card.GetSymbol()}, con valore {card.GetValue()}, totale ora {TotalValue()}");
 
-            if (TotalValue() >= 7.5)
+            if (TotalValue() > 7.5)
             {
                 Console.WriteLine($"Il PC ha sballato!");
                 break;

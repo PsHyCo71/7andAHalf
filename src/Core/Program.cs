@@ -63,16 +63,26 @@ public class Program
                         break; // L'utente ha deciso di stare o ha sballato
                     }
                 }
-
-                // 4️⃣ Turno ComputerPlayer (automatico)
-                pc.DrawCard(deck);
-
-                // 5️⃣ Confronto dei punteggi e vincitore
                 if (human.TotalValue() > 7.5)
                 {
                     Console.WriteLine("Hai sballato! Vince il PC (mazziere).");
+                    to_play = input.run("Vuoi inizare un'altra partita? Si[s] No[n]", 's', 'n');
+                    first_game = false;
+                    if (to_play == false)
+                    {
+                        Console.WriteLine("Uscita dal programma...");
+                        break;
+                    }
+                continue;
                 }
-                else if (pc.TotalValue() > 7.5)
+                else
+                {
+                    // 4️⃣ Turno ComputerPlayer (automatico)
+                    pc.DrawCard(deck);
+                }
+
+                // 5️⃣ Confronto dei punteggi e vincitore
+                if (pc.TotalValue() > 7.5)
                 {
                     Console.WriteLine("Il PC ha sballato! Hai vinto!");
                 }
@@ -96,6 +106,11 @@ public class Program
                 // 6️⃣ Chiedere se vuole fare un'altra partita
                 to_play = input.run("Vuoi inizare un'altra partita? Si[s] No[n]", 's', 'n');
                 first_game = false;
+                if (to_play == false)
+                {
+                    Console.WriteLine("Uscita dal programma...");
+                    break;
+                }
             }
         }
         else
