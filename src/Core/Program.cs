@@ -7,6 +7,8 @@ public class Program
 
     // get rules 
     public Rules? rules { get; set; }
+    public Player? CardsInHand { get; set; }
+
     public static void Main(string[] args)
     {
         Input input = new Input();
@@ -60,6 +62,9 @@ public class Program
                 Console.WriteLine("Iniziata una nuova partita.");
 
                 // start user's turn
+                Cards firstCard = deck.drawCard() ?? throw new Exception("Non ci sono carte rimaste.");
+                human.ReceiveInitialCard(firstCard);
+
                 while (true)
                 {
                     Cards? card = human.DrawCard(deck);
@@ -70,7 +75,7 @@ public class Program
                 }
                 if (human.TotalValue() > 7.5) // if the user busted
                 {
-                    Console.WriteLine("Hai sballato! Vince il PC (mazziere).");
+                    Console.WriteLine($"Carta pescata: {human.LastCard!.GetSymbol()} Totale punti: {human.TotalValue()} Hai sballato! Vince il PC (mazziere).");
                     to_play = input.run("Vuoi inizare un'altra partita? Si[s] No[n]", 's', 'n'); // ask if he wants to play again
                     first_game = false;
                     if (to_play == false)
@@ -78,7 +83,7 @@ public class Program
                         Console.WriteLine("Uscita dal programma...");
                         break; // if 'n' then close the program
                     }
-                continue;
+                    continue;
                 }
                 else
                 {

@@ -2,9 +2,18 @@ public class HumanPlayer : Player
 {
     Input input = new Input();
 
+
     public override Cards? DrawCard(Deck deck)
     {
-        bool azione = input.run($"Valore corrente: {base.TotalValue()} \n Scegli: Carta[c] Stare[s]", 'c', 's'); // ask if the user wants to draw a card or stay
+        bool azione;
+        if (CardsInHand.Count() == 1)
+        {
+            azione = input.run($"Inizi con la carta: {CardsInHand.Last().GetSymbol()} Totale punti: {base.TotalValue()} \n Scegli: Carta[c] Stare[s]", 'c', 's'); // ask if the user wants to draw a card or stay
+        }
+        else
+        {
+        azione = input.run($"Carta pescata: {CardsInHand.Last().GetSymbol()} Totale punti: {base.TotalValue()} \n Scegli: Carta[c] Stare[s]", 'c', 's'); // ask if the user wants to draw a card or stay
+        }
 
         if (azione)
         {
