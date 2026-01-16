@@ -2,8 +2,9 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
+    <AssemblyName>7andAHalf</AssemblyName>
     <TargetFramework>net10.0</TargetFramework>
-    <RootNamespace>_7eMezzo</RootNamespace>
+    <RootNamespace>7andAHalf</RootNamespace>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>

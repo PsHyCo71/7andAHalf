@@ -2,7 +2,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.2.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "7eMezzo", "7eMezzo.csproj", "{B10BC22E-BB85-3303-E46B-A915FFBA1D69}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "7andAHalf", "7andAHalf.csproj", "{B10BC22E-BB85-3303-E46B-A915FFBA1D69}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
