@@ -39,7 +39,7 @@ The game runs entirely in the console and allows multiple rounds, viewing the ru
     ```ps1
     choco install dotnet-sdk -y   #(Only on powershell)
     ```
-    and check:
+    - and check:
     ```ps1
     dotnet --version
     ```
