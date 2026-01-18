@@ -34,10 +34,10 @@ The game runs entirely in the console and allows multiple rounds, viewing the ru
     winget install Microsoft.DotNet.SDK.10
     ```
     ```ps1
-    scoop install dotnet-sdk        (Only on powershell)
+    scoop install dotnet-sdk      #(Only on powershell)
     ```
     ```ps1
-    choco install dotnet-sdk -y     (Only on powershell)
+    choco install dotnet-sdk -y   #(Only on powershell)
     ```
     and check:
     ```ps1
