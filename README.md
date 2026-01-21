@@ -1,4 +1,4 @@
-# 7andAHalf v1.1
+# 7andAHalf v2.0
 ![.NET](https://img.shields.io/badge/.NET-10.0-blue) [![License](https://img.shields.io/badge/license-GPLv3-blue)](https://www.gnu.org/licenses/gpl-3.0.html?utm_source=chatgpt.com)
 
 ## Description
@@ -11,6 +11,7 @@ The game runs entirely in the console and allows multiple rounds, viewing the ru
 - Multiple rounds
 - Score comparison
 - Built-in rules viewer
+- Two languages (It, Eng)
 
 ## Requirements
 - Windows 10 or later
