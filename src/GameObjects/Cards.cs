@@ -1,7 +1,10 @@
+using System.Dynamic;
+using SevenAndAHalf.Services;
+
 public class Cards
 {
     // create all the cards
-    public enum CardsType 
+    public enum CardsType
     {
         Card1,
         Card2,
@@ -14,28 +17,53 @@ public class Cards
         CardCavallo,
         CardRe,
         CardMatta,
-    }                   
+    }
 
-    public double value;
-    public CardsType type {get; private set;}
+    /// <summary>
+    /// Represents a playing card in the game.
+    /// </summary>
+    public double value; // The numerical value of the card (1–7 or 0.5 for face cards)
 
+    /// <summary>
+    /// The type of the card (numbered, face card, or wild card).
+    /// </summary>
+    public CardsType type { get; private set; }
+
+    /// <summary>
+    /// Constructs a standard card with a specific type (numbered or face card).
+    /// Throws an exception if trying to create a wild card with this constructor.
+    /// </summary>
+    /// <param name="type">The type of the card to create.</param>
     public Cards(CardsType type)
     {
         this.type = type;
+
+        // Wild card cannot be created using this constructor
         if (type == CardsType.CardMatta)
         {
-            throw new Exception("Questo non dovrebbe succedere.");
+            throw new Exception(Lang.Translation("not_supposed"));
         }
+
+        // Set the card's value according to its type
         this.value = _GetValue();
     }
 
+    /// <summary>
+    /// Constructs a wild card (CardMatta) with a specific value.
+    /// </summary>
+    /// <param name="value">The value to assign to the wild card.</param>
     public Cards(double value)
     {
         this.type = CardsType.CardMatta;
         this.value = value;
     }
 
-    // set the cards symbols
+
+    public static Language currentLanguage { get; set; } // get currentLanguage from Lang
+
+    /// <summary>
+    /// Returns symbol of the card for display
+    /// </summary>
     public char GetSymbol()
     {
         switch (type)
@@ -55,19 +83,21 @@ public class Cards
             case CardsType.Card7:
                 return '7';
             case CardsType.CardFante:
-                return 'F';
+                return Cards.currentLanguage == Language.IT ? 'F' : 'J';
             case CardsType.CardCavallo:
-                return 'C';
+                return Cards.currentLanguage == Language.IT ? 'C' : 'Q';
             case CardsType.CardRe:
-                return 'R';
+                return Cards.currentLanguage == Language.IT ? 'R' : 'K';
             case CardsType.CardMatta:
-                return 'M';
+                return Cards.currentLanguage == Language.IT ? 'M' : 'J';
             default:
-                throw new System.Exception("Carta non valida");
+                throw new System.Exception(Lang.Translation("invalid_card"));
         }
     }
 
-    // set cards values
+    /// <summary>
+    /// Sets the default value of a card based on its type
+    /// </summary>
     private double _GetValue()
     {
         switch (type)
@@ -92,7 +122,7 @@ public class Cards
             case CardsType.CardMatta:
                 return 0.5;
             default:
-                throw new System.Exception("Carta non valida");
+                throw new System.Exception(Lang.Translation("invalid_card"));
         }
     }
 

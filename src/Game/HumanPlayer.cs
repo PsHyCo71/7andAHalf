@@ -1,28 +1,40 @@
+using SevenAndAHalf.Services;
+
 public class HumanPlayer : Player
 {
+    // Input handler for asking the user
     Input input = new Input();
 
-
+    /// <summary>
+    /// Executes a human player's action for one turn (draw or stay)
+    /// </summary>
+    /// <param name="deck">Deck to draw cards from</param>
+    /// <returns>The card drawn, or null if player stays</returns>
     public override Cards? DrawCard(Deck deck)
     {
         bool azione;
+
+        // Different message if it's the first card or subsequent cards
         if (CardsInHand.Count() == 1)
         {
-            azione = input.run($"Inizi con la carta: {CardsInHand.Last().GetSymbol()} Totale punti: {base.TotalValue()} \n Scegli: Carta[c] Stare[s]", 'c', 's'); // ask if the user wants to draw a card or stay
+            string prompt_1 = Lang.Translation("first_turn_query", CardsInHand.Last().GetSymbol(), base.TotalValue());
+            azione = input.run(prompt_1, 'c', 'c', 's'); // Ask user: draw or stay
         }
         else
         {
-        azione = input.run($"Carta pescata: {CardsInHand.Last().GetSymbol()} Totale punti: {base.TotalValue()} \n Scegli: Carta[c] Stare[s]", 'c', 's'); // ask if the user wants to draw a card or stay
+            string prompt_2 = Lang.Translation("subsequent_turn_query", CardsInHand.Last().GetSymbol(), base.TotalValue());
+            azione = input.run(prompt_2, 'c', 'c', 's'); // Ask user: draw or stay
         }
 
         if (azione)
         {
-            Cards? card = deck.drawCard() ?? throw new Exception("Non ci sono carte rimaste."); // draw card and throw exeption in case there are no cards left
+            // Draw card and throw exception if deck empty
+            Cards? card = deck.drawCard() ?? throw new Exception(Lang.Translation("no_cards"));
 
-            // if the drawed card is CardMatta set its value following the rules
+            // Adjust value if card is a wild card
             if (card.type == Cards.CardsType.CardMatta)
             {
-                System.Console.WriteLine("Hai pescato una matta! Se hai altre carte, il suo valore sarà tale da garantire che il totale sia 7.5.");
+                System.Console.WriteLine(Lang.Translation("draw_matta"));
                 if (TotalValue() == 0)
                 {
                     card.value = 0.5;
@@ -32,34 +44,37 @@ public class HumanPlayer : Player
                     card.value = 7.5 - TotalValue();
                 }
             }
-            CardsInHand.Add(card);  // add the drawed card to the drawed cards list
             return card;
         }
         else
         {
-            return null;
+            return null; // Player chose to stay
         }
     }
 
-    // manage the player's turn
+    /// <summary>
+    /// Manages the player's full turn until they stay or bust
+    /// </summary>
+    /// <param name="deck">Deck to draw cards from</param>
+    /// <returns>Total points after turn</returns>
     public double Turn(Deck deck)
     {
         while (true)
         {
             Cards? card = this.DrawCard(deck);
 
-            if (card == null)
+            if (card == null) // player chose to stay
             {
                 break;
             }
             else
             {
-                base.AddCard(card);
+                base.AddCard(card); // Add drawn card to hand
 
+                // Check if player busted
                 if (base.TotalValue() > 7.5)
                 {
-                    System.Console.WriteLine("Hai sballato.");
-
+                    System.Console.WriteLine(Lang.Translation("player_bust_short"));
                     break;
                 }
             }

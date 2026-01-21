@@ -2,10 +2,16 @@ using SevenAndHalfGame;
 
 public abstract class Player
 {
+    // Reference to Program (not really used)
     Program cardsinhand = new Program();
-    protected List<Cards> CardsInHand = new List<Cards>();  // create a list for the drawed cards
 
-    // func for couningt the total points of a player
+    // List of cards in player's hand
+    protected List<Cards> CardsInHand = new List<Cards>();
+
+    /// <summary>
+    /// Calculates the total value of the cards in hand
+    /// </summary>
+    /// <returns>Total points of player</returns>
     public double TotalValue()
     {
         double total = 0;
@@ -14,8 +20,7 @@ public abstract class Player
         {
             if (card.type == Cards.CardsType.CardMatta)
             {
-                // if matta is the only card in hand, its value is equal to 0.5
-                // otherwise its value becomes equal to what the player needs to reach 7.5
+                // Adjust wild card value
                 double otherCardsTotal = total;
                 card.value = (otherCardsTotal == 0) ? 0.5 : Math.Min(7.5 - otherCardsTotal, 7.5);
             }
@@ -26,12 +31,17 @@ public abstract class Player
         return total;
     }
 
-    // func for adding cards to the drawed cards's list
+    /// <summary>
+    /// Adds a card to the player's hand
+    /// </summary>
     public void AddCard(Cards card)
     {
         CardsInHand.Add(card);
     }
 
+    /// <summary>
+    /// Returns the last card drawn by the player
+    /// </summary>
     public Cards? LastCard
     {
         get
@@ -43,10 +53,16 @@ public abstract class Player
         }
     }
 
+    /// <summary>
+    /// Receives the initial card at the start of the turn
+    /// </summary>
     public void ReceiveInitialCard(Cards card)
     {
         CardsInHand.Add(card);
     }
 
+    /// <summary>
+    /// Abstract method for drawing a card (implemented by HumanPlayer or ComputerPlayer)
+    /// </summary>
     public abstract Cards? DrawCard(Deck deck);
 }
